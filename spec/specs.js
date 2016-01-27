@@ -59,6 +59,7 @@ describe('Game', function () {
     var testBoard = new Board();
     expect(testGame.makeBoard()).to.eql(testBoard);
   });
+
   it("initializes the players", function () {
     var testGame = new Game();
     var testPlayer1 = new Player("X");
@@ -68,5 +69,15 @@ describe('Game', function () {
     testGame.makePlayers(2);
     expect(testGame.player1).to.eql(testPlayer1);
     expect(testGame.player2).to.eql(testPlayer2);
+  });
+
+  it("tell player when game has been won, returning the player who won", function() {
+    var testGame = new Game();
+    testGame.makePlayers(2);
+    testGame.makeBoard();
+    testGame.board[0].markedBy(testGame.player1);
+    testGame.board[1].markedBy(testGame.player1);
+    testGame.board[2].markedBy(testGame.player1);
+    expect(testGame.checkState()).eo.equal(testGame.player1);
   });
 });

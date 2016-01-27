@@ -1,5 +1,6 @@
 var Player = function (shape) {
   this.shape = shape;
+  this.score = 0;
 };
 
 Player.prototype.mark = function () {
