@@ -1,15 +1,15 @@
-var Player = function (shape) {
-  this.shape = shape;
+var Player = function (shapey) {
+  this.shapey = shapey;
   this.score = 0;
 };
 
 Player.prototype.mark = function () {
-  return this.shape;
+  return this.shapey;
 };
 
 var Space = function (x, y) {
-  this.x = x;
-  this.y = y;
+  this.x = x; // Didn't end up using, can be removed.
+  this.y = y; // Didn't end up using, can be removed.
   this.mark;
 };
 
@@ -24,15 +24,17 @@ Space.prototype.markedBy = function (player) {
 };
 
 var Board = function() {
-  var array = [];
+  var arr1 = [];
 
   for (var i = 0; i < 3; i++) {
+    var arr2 = [];
     for (var j = 0; j < 3; j++) {
       var space = new Space(i, j);
-      array.push(space);
+      arr2.push(space);
     }
+    arr1.push(arr2);
   }
-  return array;
+  return arr1;
 }
 
 var Game = function () {
@@ -51,4 +53,45 @@ Game.prototype.makePlayers = function (players) {
     this.player1 = new Player("X");
     this.player2 = new Player("O");
   }
+};
+
+//TODO: add player score
+Game.prototype.checkState = function() {
+  var ret = false;
+  if (this.board) {
+    if(this.board[0][0].mark === this.board[0][1].mark && this.board[0][0].mark === this.board[0][2].mark) {
+      ret = this.board[0][0].mark;
+    }
+    if(this.board[1][0].mark === this.board[1][1].mark && this.board[1][0].mark === this.board[1][2].mark) {
+      console.log(this.board[1][0]);
+      ret = this.board[1][0].mark;
+    }
+    if(this.board[2][0].mark === this.board[2][1].mark && this.board[2][0].mark === this.board[2][2].mark) {
+      console.log(this.board[1][0]);
+      ret = this.board[2][0].mark;
+    }
+
+    if(this.board[0][0].mark === this.board[1][0].mark && this.board[0][0].mark === this.board[2][0].mark) {
+      console.log(this.board[1][0]);
+      ret = this.board[2][0].mark;
+    }
+    if(this.board[0][1].mark === this.board[1][1].mark && this.board[0][1].mark === this.board[2][1].mark) {
+      console.log(this.board[1][0]);
+      ret = this.board[2][0].mark;
+    }
+    if(this.board[0][2].mark === this.board[1][2].mark && this.board[0][2].mark === this.board[2][2].mark) {
+      console.log(this.board[1][0]);
+      ret = this.board[2][0].mark;
+    }
+
+    if(this.board[0][0].mark === this.board[1][1].mark && this.board[0][0].mark === this.board[2][2].mark) {
+      console.log(this.board[1][0]);
+      ret = this.board[2][0].mark;
+    }
+    if(this.board[0][2].mark === this.board[1][1].mark && this.board[0][2].mark === this.board[2][0].mark) {
+      console.log(this.board[1][0]);
+      ret = this.board[2][0].mark;
+    }
+  }
+  return ret;
 };

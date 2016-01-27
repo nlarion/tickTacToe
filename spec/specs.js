@@ -29,27 +29,27 @@ describe('Space', function() {
 describe('Board', function() {
   it("creates spaces when it is initialized", function() {
     var testBoard = new Board();
-    expect(testBoard.length).to.equal(9);
+    expect(testBoard.length).to.equal(3);
    });
 
    it("creates spaces with x and y keys that are 0,0 for first object", function() {
      var testBoard = new Board();
-     expect(testBoard).to.have.deep.property('[0].x',0);
-     expect(testBoard).to.have.deep.property('[0].y',0);
+     expect(testBoard).to.have.deep.property('[0][0].x',0);
+     expect(testBoard).to.have.deep.property('[0][0].y',0);
 
   });
 
   it("creates spaces with x and y keys", function() {
     var testBoard = new Board();
-    testBoard.should.all.have.property('x');
-    testBoard.should.all.have.property('y');
+    testBoard[0].should.all.have.property('x');
+    testBoard[0].should.all.have.property('y');
    });
 
    it("creates spaces and marks the first space with player x", function() {
      var testBoard = new Board();
      var testPlayer = new Player("X");
-     testBoard[0].markedBy(testPlayer);
-     expect(testBoard[0].mark).to.equal(testPlayer);
+     testBoard[0][0].markedBy(testPlayer);
+     expect(testBoard[0][0].mark).to.equal(testPlayer);
     });
 });
 
@@ -71,13 +71,25 @@ describe('Game', function () {
     expect(testGame.player2).to.eql(testPlayer2);
   });
 
-  it("tell player when game has been won, returning the player who won", function() {
+  it("tell player when game has been won in rows, returning the player who won or false", function() {
     var testGame = new Game();
     testGame.makePlayers(2);
     testGame.makeBoard();
-    testGame.board[0].markedBy(testGame.player1);
-    testGame.board[1].markedBy(testGame.player1);
-    testGame.board[2].markedBy(testGame.player1);
-    expect(testGame.checkState()).eo.equal(testGame.player1);
+    testGame.board[2][0].markedBy(testGame.player1);
+    testGame.board[2][1].markedBy(testGame.player1);
+    testGame.board[2][2].markedBy(testGame.player1);
+    //console.log(testGame);
+    expect(testGame.checkState()).to.equal(testGame.player1);
+  });
+
+  it("tell player when game has been won in columns, returning the player who won", function() {
+    var testGame = new Game();
+    testGame.makePlayers(2);
+    testGame.makeBoard();
+    testGame.board[0][0].markedBy(testGame.player1);
+    testGame.board[1][0].markedBy(testGame.player1);
+    testGame.board[2][0].markedBy(testGame.player1);
+    //console.log(testGame);
+    expect(testGame.checkState()).to.equal(testGame.player1);
   });
 });
