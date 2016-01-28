@@ -56,6 +56,7 @@ Game.prototype.makePlayers = function (players) {
 };
 //TODO: make checkState prototype
 //TODO: make the checkState add player score
+// TODO: make function that determines who's turn it is and returns the player whose turn it is.
 
 Game.prototype.checkState = function() {
   var ret = false;
@@ -115,3 +116,58 @@ Game.prototype.checkState = function() {
 //     }
 //   }
 // };
+
+//UI logic below
+$(document).ready(function () {
+  var game = new Game();
+
+  $(".topLeft").click(function (){
+    game.board[0][0].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".topMiddle").click(function (){
+    game.board[0][1].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".topRight").click(function (){
+    game.board[0][2].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".middleLeft").click(function (){
+    game.board[1][0].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".middleMiddle").click(function (){
+    game.board[1][1].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".middleRight").click(function (){
+    game.board[1][2].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".bottomLeft").click(function (){
+    game.board[2][0].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".bottomMiddle").click(function (){
+    game.board[2][1].markedBy(game.getPlayerByTurn());
+  });
+
+  $(".bottomRight").click(function (){
+    game.board[2][2].markedBy(game.getPlayerByTurn());
+  });
+
+  $("form#players").submit(function(event) {
+    event.preventDefault();
+    debugger;
+    var inputtedPlayers = parseInt($("#playersAmount").val());
+
+    game.makePlayers(inputtedPlayers);
+    game.makeBoard();
+
+
+
+
+
+  });
+});
