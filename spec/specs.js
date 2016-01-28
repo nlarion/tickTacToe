@@ -92,4 +92,14 @@ describe('Game', function () {
     //console.log(testGame);
     expect(testGame.checkState()).to.equal(testGame.player1);
   });
+
+  it("Return the player who's turn it is.", function() {
+    var testGame = new Game();
+    testGame.makePlayers(2);
+    testGame.makeBoard();
+    testGame.playerTurn = 1; //always 1 for the test otherwise random start
+    //console.log(testGame);
+    expect(testGame.returnPlayerAndChangeTurn()).to.equal(testGame.player1,testGame.player2);
+  });
+
 });
