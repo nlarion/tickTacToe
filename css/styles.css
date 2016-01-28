@@ -2,6 +2,13 @@ body {
   background-color: lightblue;
 }
 
+.scoreboard {
+  background: lightgrey;
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 5px;
+}
+
 .gameContainer {
   display: none;
   font-size: 52pt;

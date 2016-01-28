@@ -72,42 +72,40 @@ Game.prototype.returnPlayerAndChangeTurn = function () {
 
 //TODO: make the checkState add player score
 
+Game.prototype.winState = function(player) {
+  player.score += 1;
+    console.log(player);
+  return true;
+}
+
 Game.prototype.checkState = function() {
   var ret = false;
   if (this.board) {
     if(this.board[0][0].mark != undefined && this.board[0][0].mark === this.board[0][1].mark && this.board[0][0].mark === this.board[0][2].mark) {
-      console.log(this.board[0][0].mark);
-      ret = this.board[0][0].mark;
+      return this.winState(this.board[0][0].mark);
     }
     if(this.board[1][0].mark != undefined && this.board[1][0].mark === this.board[1][1].mark && this.board[1][0].mark === this.board[1][2].mark) {
-      console.log(this.board[1][0].mark);
-      ret = this.board[1][0].mark;
+      return this.winState(this.board[1][0].mark);
     }
     if(this.board[2][0].mark != undefined && this.board[2][0].mark === this.board[2][1].mark && this.board[2][0].mark === this.board[2][2].mark) {
-      console.log(this.board[2][0].mark);
-      ret = this.board[2][0].mark;
+      return this.winState(this.board[2][0].mark);
     }
 
     if(this.board[0][0].mark != undefined && this.board[0][0].mark === this.board[1][0].mark && this.board[0][0].mark === this.board[2][0].mark) {
-      console.log(this.board[0][0].mark);
-      ret = this.board[0][0].mark;
+      return this.winState(this.board[0][0].mark);
     }
     if(this.board[0][1].mark != undefined && this.board[0][1].mark === this.board[1][1].mark && this.board[0][1].mark === this.board[2][1].mark) {
-      console.log(this.board[0][1].mark);
-      ret = this.board[0][1].mark;
+      return this.winState(this.board[0][1].mark);
     }
     if(this.board[0][2].mark != undefined && this.board[0][2].mark === this.board[1][2].mark && this.board[0][2].mark === this.board[2][2].mark) {
-      console.log(this.board[0][2].mark);
-      ret = this.board[0][2].mark;
+      return this.winState(this.board[0][2].mark);
     }
 
     if(this.board[0][0].mark != undefined && this.board[0][0].mark === this.board[1][1].mark && this.board[0][0].mark === this.board[2][2].mark) {
-      console.log(this.board[2][0].mark);
-      ret = this.board[2][0].mark;
+      return this.winState(this.board[2][0].mark);
     }
     if(this.board[0][2].mark != undefined && this.board[0][2].mark === this.board[1][1].mark && this.board[0][2].mark === this.board[2][2].mark) {
-      console.log(this.board[2][0].mark);
-      ret = this.board[2][0].mark;
+      return this.winState(this.board[2][0].mark);
     }
   }
   return ret;
@@ -162,70 +160,106 @@ $(document).ready(function () {
     var player = game.returnPlayerAndChangeTurn();
     game.board[0][0].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
   $(".topMiddle").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[0][1].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 
   $(".topRight").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[0][2].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 
   $(".middleLeft").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[1][0].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 
   $(".middleMiddle").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[1][1].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 
   $(".middleRight").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[1][2].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 
   $(".bottomLeft").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[2][0].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 
   $(".bottomMiddle").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[2][1].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 
   $(".bottomRight").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[2][2].markedBy(player);
     console.log(player.shape);
-    game.checkState();
     $(this).text(player.shape);
+    if(game.checkState()){
+      clearBoard();
+      game.makeBoard();
+      alert("you won a whole internets!");
+    }
   });
 });
