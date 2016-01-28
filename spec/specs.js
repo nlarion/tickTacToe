@@ -78,8 +78,7 @@ describe('Game', function () {
     testGame.board[2][0].markedBy(testGame.player1);
     testGame.board[2][1].markedBy(testGame.player1);
     testGame.board[2][2].markedBy(testGame.player1);
-    //console.log(testGame);
-    expect(testGame.checkState()).to.equal(testGame.player1);
+    expect(testGame.checkState()).to.equal("win");
   });
 
   it("tell player when game has been won in columns, returning the player who won", function() {
@@ -89,17 +88,16 @@ describe('Game', function () {
     testGame.board[0][0].markedBy(testGame.player1);
     testGame.board[1][0].markedBy(testGame.player1);
     testGame.board[2][0].markedBy(testGame.player1);
-    //console.log(testGame);
-    expect(testGame.checkState()).to.equal(testGame.player1);
+    expect(testGame.checkState()).to.equal("win");
   });
 
   it("Return the player who's turn it is.", function() {
     var testGame = new Game();
     testGame.makePlayers(2);
     testGame.makeBoard();
+    testGame.board[0][0].markedBy(testGame.player1)
     testGame.playerTurn = 1; //always 1 for the test otherwise random start
-    //console.log(testGame);
-    expect(testGame.returnPlayerAndChangeTurn()).to.equal(testGame.player1,testGame.player2);
+    expect(testGame.returnPlayerAndChangeTurn(testGame.board[0][0])).to.equal(testGame.player1,testGame.player2);
   });
 
 });

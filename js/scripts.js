@@ -154,9 +154,13 @@ Game.prototype.checkState = function() {
 // };
 
 //UI logic below
+function somefunction(){
+
+}
 
 $(document).ready(function () {
   var game = new Game();
+  game.makeBoard();
   function clearBoard(){
     $(".topMiddle").text("");
     $(".topRight").text("");
@@ -191,169 +195,34 @@ $(document).ready(function () {
     game.makePlayers(inputtedPlayers);
     game.makeBoard();
     updateDisplay();
+    // console.log(game.board)
   });
 
-  $(".topLeft").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[0][0]);
-    game.board[0][0].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState() === "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
-  $(".topMiddle").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[0][1]);
-    game.board[0][1].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState() === "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
+for (var j = 0; j < game.board.length; j++) {
+  for (var k = 0; k < game.board[0].length; k++) {
+    // console.log(" j: "+j+" k: "+k);
+    $("#"+j+""+k).click(function (){
+      var pointerArr = $(this).attr('id');
+      pointerArr = pointerArr.split("");
+      // console.log(pointerArr);
+      var player = game.returnPlayerAndChangeTurn(game.board[pointerArr[0]][pointerArr[1]]);
+      game.board[pointerArr[0]][pointerArr[1]].markedBy(player);
+      // console.log(player.shape);
+      $(this).text(player.shape);
+      if(game.checkState() === "win"){
+        alert("You are a Winrar!!!!11!");
+        clearBoard();
+        game.makeBoard();
+      }else if(game.checkState()==="cats"){
+        alert("Awwww cats!");
+        clearBoard();
+        game.makeBoard();
+        clearBoard();
+        game.makeBoard();
+      }
+      updateDisplay();
+    });
+  }
+}
 
-  $(".topRight").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[0][2]);
-    game.board[0][2].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState()=== "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
-
-  $(".middleLeft").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[1][0]);
-    game.board[1][0].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState()){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
-
-  $(".middleMiddle").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[1][1]);
-    game.board[1][1].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState() === "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
-
-  $(".middleRight").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[1][2]);
-    game.board[1][2].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState() === "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
-
-  $(".bottomLeft").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[2][0]);
-    game.board[2][0].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState() === "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
-
-  $(".bottomMiddle").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[2][1]);
-    game.board[2][1].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState()=== "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState() ==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
-
-  $(".bottomRight").click(function (){
-    var player = game.returnPlayerAndChangeTurn(game.board[2][2]);
-    game.board[2][2].markedBy(player);
-    console.log(player.shape);
-    $(this).text(player.shape);
-    if(game.checkState() === "win"){
-      alert("You are a Winrar!!!!11!");
-      clearBoard();
-      game.makeBoard();
-    }else if(game.checkState()==="cats"){
-      alert("Awwww cats!");
-      clearBoard();
-      game.makeBoard();
-      clearBoard();
-      game.makeBoard();
-    }
-    updateDisplay();
-  });
 });
