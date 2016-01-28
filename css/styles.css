@@ -2,6 +2,12 @@ body {
   background-color: lightblue;
 }
 
+.gameContainer {
+  display: none;
+  font-size: 52pt;
+  text-align: center;
+}
+
 .topRight {
   border-bottom: 5px solid black;
   border-left: 5px solid black;

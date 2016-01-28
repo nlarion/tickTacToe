@@ -134,7 +134,30 @@ Game.prototype.checkState = function() {
 
 //UI logic below
 $(document).ready(function () {
+  function clearBoard(){
+    $(".topMiddle").text("");
+    $(".topRight").text("");
+    $(".topLeft").text("");
+    $(".middleMiddle").text("");
+    $(".middleRight").text("");
+    $(".middleLeft").text("");
+    $(".bottomMiddle").text("");
+    $(".bottomRight").text("");
+    $(".bottomLeft").text("");
+  }
   var game = new Game();
+
+  $("form#players").submit(function(event) {
+    event.preventDefault();
+    $(".gameContainer").fadeIn(800);
+    // debugger;
+    var inputtedPlayers = parseInt($("#playersAmount").val());
+    clearBoard();
+    console.log(game);
+    game.makePlayers(inputtedPlayers);
+    game.makeBoard();
+  });
+
   $(".topLeft").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[0][0].markedBy(player);
@@ -142,7 +165,6 @@ $(document).ready(function () {
     game.checkState();
     $(this).text(player.shape);
   });
-
   $(".topMiddle").click(function (){
     var player = game.returnPlayerAndChangeTurn();
     game.board[0][1].markedBy(player);
@@ -205,19 +227,5 @@ $(document).ready(function () {
     console.log(player.shape);
     game.checkState();
     $(this).text(player.shape);
-  });
-
-  $("form#players").submit(function(event) {
-    event.preventDefault();
-    // debugger;
-    var inputtedPlayers = parseInt($("#playersAmount").val());
-
-    game.makePlayers(inputtedPlayers);
-    game.makeBoard();
-
-
-
-
-
   });
 });
