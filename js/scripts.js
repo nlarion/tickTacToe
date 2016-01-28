@@ -1,10 +1,10 @@
-var Player = function (shapey) {
-  this.shapey = shapey;
+var Player = function (shape) {
+  this.shape = shape;
   this.score = 0;
 };
 
 Player.prototype.mark = function () {
-  return this.shapey;
+  return this.shape;
 };
 
 var Space = function (x, y) {
@@ -54,8 +54,9 @@ Game.prototype.makePlayers = function (players) {
     this.player2 = new Player("O");
   }
 };
+//TODO: make checkState prototype
+//TODO: make the checkState add player score
 
-//TODO: add player score
 Game.prototype.checkState = function() {
   var ret = false;
   if (this.board) {
@@ -88,10 +89,29 @@ Game.prototype.checkState = function() {
       console.log(this.board[1][0]);
       ret = this.board[2][0].mark;
     }
-    if(this.board[0][2].mark === this.board[1][1].mark && this.board[0][2].mark === this.board[2][0].mark) {
+    if(this.board[0][2].mark === this.board[1][1].mark && this.board[0][2].mark === this.board[2][2].mark) {
       console.log(this.board[1][0]);
       ret = this.board[2][0].mark;
     }
   }
   return ret;
 };
+
+// Game.prototype.checkState =  function() {
+//   if (this.board) {
+//     console.log(this.board);
+//     for (var i = 0; i < this.board.length; i++) {
+//       console.log(i);
+//       //console.log(this.board[i][0].mark);
+//       if((this.board[i][0].mark === this.board[i][1].mark) && (this.board[i][0].mark === this.board[i][2].mark) && (this.board[i][0].mark!="undefined")) {
+//         console.log(this.board[i][0].mark.shape);
+//         return this.board[i][0].mark.shape;
+//       } else if((this.board[0][i].mark.shape === this.board[1][i].mark) && (this.board[0][i].mark === this.board[2][i].mark) && (this.board[0][i].mark!="undefined")) {
+//         console.log("this.board");
+//         return this.board[i][0].mark;
+//       } else {
+//         console.log("last");
+//       }
+//     }
+//   }
+// };
