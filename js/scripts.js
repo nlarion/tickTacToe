@@ -60,13 +60,17 @@ Game.prototype.makePlayers = function (players) {
   }
 };
 
-Game.prototype.returnPlayerAndChangeTurn = function () {
-  if(this.playerTurn === 1 ){
-    this.playerTurn = 2;
-    return this.player1;
+Game.prototype.returnPlayerAndChangeTurn = function (space) {
+  if (!space.mark) {
+    if(this.playerTurn === 1 ){
+      this.playerTurn = 2;
+      return this.player1;
+    } else {
+      this.playerTurn = 1;
+      return this.player2;
+    }
   } else {
-    this.playerTurn = 1;
-    return this.player2;
+    return space.mark;
   }
 };
 
@@ -82,30 +86,49 @@ Game.prototype.checkState = function() {
   var ret = false;
   if (this.board) {
     if(this.board[0][0].mark != undefined && this.board[0][0].mark === this.board[0][1].mark && this.board[0][0].mark === this.board[0][2].mark) {
-      return this.winState(this.board[0][0].mark);
+      this.winState(this.board[0][0].mark);
+      return "win";
     }
     if(this.board[1][0].mark != undefined && this.board[1][0].mark === this.board[1][1].mark && this.board[1][0].mark === this.board[1][2].mark) {
-      return this.winState(this.board[1][0].mark);
+      this.winState(this.board[1][0].mark);
+      return "win";
     }
     if(this.board[2][0].mark != undefined && this.board[2][0].mark === this.board[2][1].mark && this.board[2][0].mark === this.board[2][2].mark) {
-      return this.winState(this.board[2][0].mark);
+      this.winState(this.board[2][0].mark);
+      return "win";
     }
 
     if(this.board[0][0].mark != undefined && this.board[0][0].mark === this.board[1][0].mark && this.board[0][0].mark === this.board[2][0].mark) {
-      return this.winState(this.board[0][0].mark);
+      this.winState(this.board[0][0].mark);
+      return "win";
     }
     if(this.board[0][1].mark != undefined && this.board[0][1].mark === this.board[1][1].mark && this.board[0][1].mark === this.board[2][1].mark) {
-      return this.winState(this.board[0][1].mark);
+      this.winState(this.board[0][1].mark);
+      return "win";
     }
     if(this.board[0][2].mark != undefined && this.board[0][2].mark === this.board[1][2].mark && this.board[0][2].mark === this.board[2][2].mark) {
-      return this.winState(this.board[0][2].mark);
+      this.winState(this.board[0][2].mark);
+      return "win";
     }
 
     if(this.board[0][0].mark != undefined && this.board[0][0].mark === this.board[1][1].mark && this.board[0][0].mark === this.board[2][2].mark) {
-      return this.winState(this.board[2][0].mark);
+      this.winState(this.board[2][2].mark);
+      return "win";
     }
-    if(this.board[0][2].mark != undefined && this.board[0][2].mark === this.board[1][1].mark && this.board[0][2].mark === this.board[2][2].mark) {
-      return this.winState(this.board[2][0].mark);
+    if(this.board[0][2].mark != undefined && this.board[0][2].mark === this.board[1][1].mark && this.board[0][2].mark === this.board[2][0].mark) {
+      this.winState(this.board[2][0].mark);
+      return "win";
+    }
+    var funtimes = 0;
+    for (var i = 0; i < this.board.length; i++) {
+      for (var j = 0; j < this.board[i].length; j++) {
+        if(this.board[i][j].mark!=undefined){
+          funtimes ++;
+        }
+      }
+    }
+    if (funtimes === 9){
+      return "cats";
     }
   }
   return ret;
@@ -131,7 +154,9 @@ Game.prototype.checkState = function() {
 // };
 
 //UI logic below
+
 $(document).ready(function () {
+  var game = new Game();
   function clearBoard(){
     $(".topMiddle").text("");
     $(".topRight").text("");
@@ -143,7 +168,18 @@ $(document).ready(function () {
     $(".bottomRight").text("");
     $(".bottomLeft").text("");
   }
-  var game = new Game();
+
+  function updateDisplay(){
+    $("#player1Score").text(game.player1.score);
+    $("#player2Score").text(game.player2.score);
+    if(game.playerTurn===1){
+      $("#character1").text(game.player1.shape+" <-- turn");
+      $("#character2").text(game.player2.shape);
+    } else if (game.playerTurn === 2){
+      $("#character1").text(game.player1.shape);
+      $("#character2").text(game.player2.shape+" <-- turn");
+    }
+  }
 
   $("form#players").submit(function(event) {
     event.preventDefault();
@@ -154,112 +190,170 @@ $(document).ready(function () {
     console.log(game);
     game.makePlayers(inputtedPlayers);
     game.makeBoard();
+    updateDisplay();
   });
 
   $(".topLeft").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[0][0]);
     game.board[0][0].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState() === "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
   $(".topMiddle").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[0][1]);
     game.board[0][1].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState() === "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 
   $(".topRight").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[0][2]);
     game.board[0][2].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState()=== "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 
   $(".middleLeft").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[1][0]);
     game.board[1][0].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
     if(game.checkState()){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 
   $(".middleMiddle").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[1][1]);
     game.board[1][1].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState() === "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 
   $(".middleRight").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[1][2]);
     game.board[1][2].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState() === "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 
   $(".bottomLeft").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[2][0]);
     game.board[2][0].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState() === "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 
   $(".bottomMiddle").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[2][1]);
     game.board[2][1].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState()=== "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState() ==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 
   $(".bottomRight").click(function (){
-    var player = game.returnPlayerAndChangeTurn();
+    var player = game.returnPlayerAndChangeTurn(game.board[2][2]);
     game.board[2][2].markedBy(player);
     console.log(player.shape);
     $(this).text(player.shape);
-    if(game.checkState()){
+    if(game.checkState() === "win"){
+      alert("You are a Winrar!!!!11!");
       clearBoard();
       game.makeBoard();
-      alert("you won a whole internets!");
+    }else if(game.checkState()==="cats"){
+      alert("Awwww cats!");
+      clearBoard();
+      game.makeBoard();
+      clearBoard();
+      game.makeBoard();
     }
+    updateDisplay();
   });
 });
